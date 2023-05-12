@@ -5,6 +5,7 @@
 #include "3rdparty/json.hpp"
 #include "io.h"
 #include "queryBuilder.h"
+#include "UI/consoleUI.h"
 
 #include <memory>
 #include <string>
@@ -128,18 +129,47 @@ int main() {
 //        std::cout << i << std::endl;
 //    }
 
-    auto aaa = std::make_unique<QueryBuilderNow>(QueryBuilder(io::get_api_key_from_file("settings.txt"), "Ostrava"));
-    auto a = aaa->get_current_weather();
+    cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
 
-    auto bbb = std::make_unique<QueryBuilderDay>(QueryBuilder(io::get_api_key_from_file("settings.txt"), "Ostrava"), 3);
+
+    auto settin = std::make_unique<Settings>(io::get_api_key_from_file("settings.txt"));
+    settin->city = "Ostrava";
+    settin->celsius = true;
+    settin->days = 10;
+    settin->save("settings.json");
+
+//    auto aaa = std::make_unique<QueryBuilderNow>(QueryBuilder(*settin));
+//    auto a = aaa->get_current_weather();
+//    auto js = aaa->get_current_weather_json();
+//    io::save_json("weather.json", js);
+
+    auto bbb = std::make_unique<QueryBuilderDay>(QueryBuilder(*settin), 7);
     auto b = bbb->get_current_forecast();
+    auto js2 = bbb->get_current_forecast_json();
+    io::save_json("forecast.json", js2);
 
-    auto bb = *b[0];
+    //auto bb = *b[0];
 
-    std::cout << bbb->get_current_forecast_json() << std::endl;
 
-    std::cout << *b[0] << std::endl;
-    std::cout << *b[1] << std::endl;
-    std::cout << *b[2] << std::endl;
+    cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
+
+    //cout << b << endl;
+    //cout << graph::get_temperature_graph(b, "Teplota", *settin) << endl;
+    cout << graph::get_precip_graph(b, "Srážky", *settin) << endl;
+
+    //std::cout << bbb->get_current_forecast_json() << std::endl;
+
+    //std::cout << *b[0] << std::endl;
+    //std::cout << *b[1] << std::endl;
+    //std::cout << *b[2] << std::endl;
+
+    std::cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
+
+
+//    auto graph = std::vector<int>{3, 4, 5, 6, 5, 4, 3, 4, 5, 6, 0, 0, 9, 10, 11, 10, 10, 9, 9, 7, 6, 5, 6};
+//    cout << graph::generate_graph(graph, "Moc pěkný graf") << endl;
+
+
+
 
 }

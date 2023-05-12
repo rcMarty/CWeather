@@ -5,12 +5,14 @@
 #include "io.h"
 #include <fstream>
 #include <regex>
+#include <iostream>
 
 std::string io::get_api_key_from_file(const std::string &path) {
     std::string ret_key;
     std::string tmp;
     std::ifstream file(path);
     if (!file.is_open()) {
+        std::cout << "Could not open file: " << path << std::endl;
         throw std::runtime_error("Could not open file: " + path);
     }
 
@@ -26,18 +28,37 @@ std::string io::get_api_key_from_file(const std::string &path) {
 }
 
 bool io::load_json(const std::string &path, nlohmann::json &json) {
-    std::ifstream file(path);
-    if (!file.is_open()) {
+    std::ifstream file;
+    try {
+        file.open(path);
+    }
+    catch (const std::exception &e) {
+        file.close();
         return false;
     }
+
+    if (!file.is_open()) {
+        file.close();
+        return false;
+    }
+
     file >> json;
     file.close();
     return true;
 }
 
 bool io::save_json(const std::string &path, nlohmann::json &json) {
-    std::ofstream file(path);
-    file << json;
+    std::ofstream file;
+    try {
+        file.open(path);
+        file << json;
+    }
+    catch (const std::exception &e) {
+        std::cout << e.what() << std::endl;
+        file.close();
+        return false;
+    }
+
     file.close();
     return true;
 }

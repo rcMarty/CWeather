@@ -82,32 +82,34 @@ nlohmann::json QueryBuilderNow::get_current_weather_json() {
 }
 
 
-QueryBuilder::QueryBuilder(const std::string &key, const std::string &city = "auto:ip") {
+QueryBuilder::QueryBuilder(const std::string &key, const std::string &city) {
 
     if (settings == nullptr) {
         std::cout << "No settings found" << std::endl;
     }
 
-    //todo response error handling
-
-    api_key = key;
-    params["key"] = api_key;
-    params["q"] = city;
-    //params["aqi"] = (json_exists ? std::string(settings["aqi"]) : "no"); //that main
+    this->api_key = key;
+    this->params["key"] = api_key;
+    this->params["q"] = city;
     params["aqi"] = "no";
 
+    //params["aqi"] = (json_exists ? std::string(settings["aqi"]) : "no"); //that main
+    //todo check if there isn't key already
+    //todo optional params - nah there isnt anything what i want to customize on this api
 
+
+
+}
+QueryBuilder::QueryBuilder(const Settings &set) {
+    this->settings = std::make_unique<Settings>(set);
+    this->api_key = set.api_key;
+    this->params["key"] = api_key;
+    this->params["q"] = set.city;
+    params["aqi"] = set.aqi ? "yes" : "no";
+
+    //params["aqi"] = (json_exists ? std::string(settings["aqi"]) : "no"); //that main
     //todo check if there isn't key already
     //todo optional params
-//    if (!settings["optional"].empty()) {
-//        for (auto &i: settings["optional"]) {
-//            for (auto &j: i.items()) {
-//                params[j.key()] = j.value().get<std::string>();
-//            }
-//        }
-//    }
-
-
 }
 
 

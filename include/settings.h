@@ -14,10 +14,14 @@ private:
     nlohmann::json settings;
     std::string settings_path = "settings.json";
 public:
-    bool celsius;
+    bool celsius = true;
     std::string api_key;
-    std::string city;
-    bool aqi;
-    Settings();
+    std::string city = "Ostrava";
+    bool aqi = true;
+    int days = 1;
+    Settings(std::string api_key);
     ~Settings() = default;
+
+    void load(std::string path);
+    void save(std::string path);
 };

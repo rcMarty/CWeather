@@ -14,6 +14,6 @@ add_compile_options(-Wall -Wextra -pedantic)
 include_directories(include)
 include_directories(include/3rdparty)
 
-add_executable(CWeather src/main.cpp src/io.cpp src/queryBuilder.cpp src/weather/Forecast.cpp src/weather/WeatherMoment.cpp src/weather/AirQuality.cpp src/weather/Astronomy.cpp src/settings.cpp src/visitors/SerializeToJsonVisitor.cpp)
+add_executable(CWeather src/main.cpp src/io.cpp src/queryBuilder.cpp src/weather/Forecast.cpp src/weather/WeatherMoment.cpp src/weather/AirQuality.cpp src/weather/Astronomy.cpp src/settings.cpp src/visitors/SerializeToJsonVisitor.cpp src/UI/consoleUI.cpp)
 target_link_libraries(CWeather curlpp curl)
 

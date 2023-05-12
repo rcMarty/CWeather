@@ -14,14 +14,16 @@
 
 
 class QueryBuilder {
+private:
+    std::string base_URI = "https://api.weatherapi.com/v1/";
+    std::string api_key;
 public:
     std::unique_ptr<Settings> settings; //todo remake setting into class Settings
-    std::string base_URI = "https://api.weatherapi.com/v1/";
     std::unordered_map<std::string, std::string> params;
-    std::string api_key;
     nlohmann::json response;
 
     std::string build_URL(const std::string &type);
+    explicit QueryBuilder(const Settings &settings);
     QueryBuilder(const QueryBuilder &type);
 
     QueryBuilder(const std::string &key, const std::string &city);

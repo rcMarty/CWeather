@@ -1,8 +1,8 @@
-////
-//// Created by rc_marty on 8.5.23.
-////
 //
-//#include "visitors/serializeToJsonVisitor.h"
+// Created by rc_marty on 8.5.23.
+//
+
+#include "visitors/serializeToJsonVisitor.h"
 //
 //void Visitors::SerializeToJsonVisitor::visit(const weather::AirQuality *value) {
 //    _jsonValue["co"] = value->co;
