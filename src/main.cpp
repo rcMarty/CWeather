@@ -9,6 +9,9 @@
 #include <memory>
 #include <string>
 #include <iostream>
+#include <curlpp/cURLpp.hpp>
+#include <curlpp/Easy.hpp>
+#include <curlpp/Options.hpp>
 
 
 using std::string;
@@ -17,12 +20,12 @@ using std::endl;
 using json = nlohmann::json;
 
 int main() {
-//
-//    curlpp::Cleanup myCleanup;
-//
-//    // Send request and get a result.
-//    // Here I use a shortcut to get it in a string stream ...
-//
+
+    //curlpp::Cleanup myCleanup;
+
+    // Send request and get a result.
+    // Here I use a shortcut to get it in a string stream ...
+
 //    std::ostringstream os;
 //    os << curlpp::options::Url(std::string("https://api.weatherapi.com/v1/ip.json?key=5528a1a55b054dd1913172922232303&q=auto:ip&aqi=yes"));
 //    string jsonString = os.str();
@@ -31,7 +34,7 @@ int main() {
 //    json j = json::parse(jsonString);
 //
 //    cout << std::setw(4) << j << endl;
-//
+
 //    auto f = std::make_unique<weather::Forecast>(weather::Forecast());
 //    f->time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 //    for (size_t i = 0; i < 10; i++) {
@@ -56,16 +59,16 @@ int main() {
 //                })}));
 //    }
 //    std::cout << f << std::endl;
-//
-//
+
+
 //    std::string ret_key;
 //    std::string tmp = "#KEY: 123";
 //
 //    if (tmp.find("#KEY:") != std::string::npos) {
 //        std::regex key_regex("[#KEYkey:\\s+]");
 //        ret_key = std::regex_replace(tmp, key_regex, std::string(""));
-//
 //    }
+//
 //    std::cout << "." << ret_key << "." << std::endl;
 //
 //
@@ -125,8 +128,8 @@ int main() {
 //        std::cout << i << std::endl;
 //    }
 
-    //auto aaa = std::make_unique<QueryBuilderNow>(io::get_api_key_from_file("settings.txt"), "Ostrava");
-    //auto a = aaa->get_current_weather();
+    auto aaa = std::make_unique<QueryBuilderNow>(QueryBuilder(io::get_api_key_from_file("settings.txt"), "Ostrava"));
+    auto a = aaa->get_current_weather();
 
     auto bbb = std::make_unique<QueryBuilderDay>(QueryBuilder(io::get_api_key_from_file("settings.txt"), "Ostrava"), 3);
     auto b = bbb->get_current_forecast();
