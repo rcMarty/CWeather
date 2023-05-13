@@ -52,6 +52,8 @@ std::string graph::generate_graph(const std::vector<int> &data, const std::strin
     for (auto &line: lines) {
         ret += line + "\n";
     }
+    
+
 
     //std::cout << "graph: " << ret << std::endl;
     return ret;
@@ -184,3 +186,24 @@ std::string graph::get_precip_graph(const std::vector<std::shared_ptr<weather::F
 }
 
 
+std::string usecases::graph_temperature_feels(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &title, Settings &settings) {
+    return std::string();
+}
+std::string usecases::graph_temperature(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &title, Settings &settings) {
+    return std::string();
+}
+std::string usecases::save_forecst(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &filename) {
+    return std::string();
+}
+std::string usecases::get_forecast(const std::vector<std::shared_ptr<weather::Forecast>> &forecast) {
+    return std::string();
+}
+std::string usecases::get_weather(const std::shared_ptr<weather::WeatherMoment> &weatherMoment) {
+    return std::string();
+}
+std::string usecases::graph_precip(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &title, Settings &settings) {
+    return std::string();
+}
+void usecases::create_settings() {
+    return;
+}

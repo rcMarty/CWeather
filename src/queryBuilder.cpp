@@ -13,6 +13,7 @@
 #include "parsersJsonFromApi/WeatherMomentJson.h"
 #include "parsersJsonFromApi/AirQualityJson.h"
 #include "parsersJsonFromApi/AstronomyJson.h"
+#include "parsersJsonFromApi/LocationJson.h"
 
 
 std::string QueryBuilder::build_URL(const std::string &type) {
@@ -20,6 +21,7 @@ std::string QueryBuilder::build_URL(const std::string &type) {
     for (auto &i: params) {
         ret += i.first + "=" + i.second + "&";
     }
+    std::cout << ret << std::endl;
     return ret;
 }
 QueryBuilder::QueryBuilder(const QueryBuilder &type) {
@@ -27,22 +29,14 @@ QueryBuilder::QueryBuilder(const QueryBuilder &type) {
     this->base_URI = type.base_URI;
     this->params = type.params;
     this->response = type.response;
+    this->settings = std::make_unique<Settings>(*type.settings);
 }
 
-
-QueryBuilderDay::QueryBuilderDay(const QueryBuilder &builder, int days) { // todo parsing into object
-    this->builder = std::make_unique<QueryBuilder>(builder);
-    this->builder->params["days"] = std::to_string(days);
-
-    std::ostringstream os;
-    os << cURLpp::options::Url(this->builder->build_URL("forecast"));
-    this->builder->response = nlohmann::json::parse(os.str());
-
-}
 
 std::vector<std::shared_ptr<weather::Forecast>> QueryBuilderDay::get_current_forecast() {
     if (this->builder->response.empty() || this->builder->response["forecast"].empty()) {
         std::cout << "Response is empty or there is not key \"forecast\"" << std::endl;
+        std::cout << this->builder->response << std::endl;
         return std::vector<std::shared_ptr<weather::Forecast>>{};
     }
 
@@ -51,6 +45,7 @@ std::vector<std::shared_ptr<weather::Forecast>> QueryBuilderDay::get_current_for
     for (const auto &item: this->builder->response["forecast"]["forecastday"]) {
         days.push_back(std::make_shared<weather::Forecast>(parsersJsonFromApi::parseForecast(item)));
     }
+
 
     return days;
 
@@ -74,7 +69,6 @@ weather::WeatherMoment QueryBuilderNow::get_current_weather() {
         return weather::WeatherMoment{};
     }
     return weather::WeatherMoment(parsersJsonFromApi::parseWeatherMoment(this->builder->response["current"]));
-
 }
 
 nlohmann::json QueryBuilderNow::get_current_weather_json() {
@@ -111,5 +105,27 @@ QueryBuilder::QueryBuilder(const Settings &set) {
     //todo check if there isn't key already
     //todo optional params
 }
+weather::Location QueryBuilder::get_location() {
+    if (this->response.empty() || this->response["location"].empty()) {
+        std::cout << "Response is empty or there is not key \"location\"" << std::endl;
+        return weather::Location{};
+    }
+    return weather::Location(parsersJsonFromApi::parseLocation(this->response["location"]));
+}
 
+
+QueryBuilderDay::QueryBuilderDay(const QueryBuilder &builder) { // todo parsing into object
+
+    this->builder = std::make_unique<QueryBuilder>(builder);
+
+    if (builder.settings == nullptr) {
+        std::cout << "Settings Not Loaded" << std::endl;
+    }
+    this->builder->params["days"] = std::to_string(this->builder->settings->days);
+
+    std::ostringstream os;
+    os << cURLpp::options::Url(this->builder->build_URL("forecast"));
+    this->builder->response = nlohmann::json::parse(os.str());
+
+}
 

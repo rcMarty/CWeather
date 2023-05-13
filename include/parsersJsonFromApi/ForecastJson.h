@@ -10,6 +10,7 @@
 #include "parsersJsonFromApi/AirQualityJson.h"
 #include "parsersJsonFromApi/WeatherMomentJson.h"
 #include <string>
+#include "colors.h"
 
 
 using json = nlohmann::json;
@@ -32,14 +33,11 @@ namespace parsersJsonFromApi {
         forecast.total_precip_mm = json["day"]["totalprecip_mm"].get<float>();
         forecast.condition_text = json["day"]["condition"]["text"];
 
-        if (json["day"].contains("air_quality")) {
-            forecast.air_quality = std::make_unique<weather::AirQuality>(parsersJsonFromApi::parseAirQuality(json["day"]["air_quality"]));
-        }
 
-        if (json["day"].contains("astro")) {
-            forecast.astronomy = std::make_unique<weather::Astronomy>(parsersJsonFromApi::parseAstronomy(json["day"]["astro"]));
+        if (json.contains("astro")) {
+            forecast.astronomy = std::make_unique<weather::Astronomy>(parsersJsonFromApi::parseAstronomy(json["astro"]));
         }
-
+        
         for (auto &hour: json["hour"]) {
             forecast.samples.push_back(std::make_shared<weather::WeatherMoment>(parsersJsonFromApi::parseWeatherMoment(hour)));
         }

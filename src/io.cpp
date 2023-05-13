@@ -17,8 +17,8 @@ std::string io::get_api_key_from_file(const std::string &path) {
     }
 
     while (getline(file, tmp)) {
-        if (tmp.find("#KEY:") != std::string::npos) {
-            std::regex key_regex("[#KEYkey:\\s+]"); //todo mby regex isn't best idea mby convert to json config file
+        if (tmp.find("> api_key = ") != std::string::npos) {
+            std::regex key_regex("(> api_key = )"); //todo mby regex isn't best idea mby convert to json config file
             ret_key = std::regex_replace(tmp, key_regex, std::string(""));
             file.close();
             return ret_key;

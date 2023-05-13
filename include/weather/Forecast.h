@@ -32,7 +32,6 @@ namespace weather {
         float max_wind_kph;
         float total_precip_mm;
         std::string condition_text;
-        std::unique_ptr<AirQuality> air_quality;
         std::unique_ptr<Astronomy> astronomy;
         std::vector<std::shared_ptr<WeatherMoment>> samples; //jak moc tady musí být unique pinter? // todo unique_ptr ???
 
@@ -41,6 +40,7 @@ namespace weather {
 
         friend std::ostream &operator<<(std::ostream &os, const Forecast &forecast);
 
+        std::string get_simple_output(const Settings &set) const;
         //void accept(Visitors::Visitor &v) const;
 
     };

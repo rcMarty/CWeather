@@ -12,15 +12,15 @@ See Weather - when you are too lazy to look outside
     - [x] zobrazení grafu v konzoli
     - [x] mby do konzole idk
 - [ ] settings
-    - [ ] nastavení lokální polohy
+    - [x] nastavení lokální polohy
     - [ ] nastavení zobrazení
-    - [ ] ukládání počasí do jsonu a případné zobrazování
-    - [ ] celosius nebo faranheit
+    - [x] ukládání počasí do jsonu a případné zobrazování
+    - [x] celosius nebo faranheit
     - [x] nastavení api klíče
     - [x] nastavení zda bude přítomna kvalita vzduchu
     - [ ] nastavení zda bude informace o astronomii
-- [ ] io věcičky
+- [x] io věcičky
     - [x] ukládání počasí do jsonu
     - [x] zobrazování počasí z jsonu
-    - [ ] loadování nastavení z jsonu
-    - [ ] ukládání nastavení do jsonu
+    - [x] loadování nastavení z jsonu
+    - [x] ukládání nastavení do jsonu

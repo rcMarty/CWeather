@@ -7,6 +7,7 @@
 #include "3rdparty/json.hpp"
 #include "weather/WeatherMoment.h"
 #include "weather/Forecast.h"
+#include "weather/Location.h"
 #include "settings.h"
 
 #include <string>
@@ -28,14 +29,15 @@ public:
 
     QueryBuilder(const std::string &key, const std::string &city);
 
+    weather::Location get_location();
+
 };
 
 class QueryBuilderDay {
-    std::unique_ptr<QueryBuilder> builder;
 public:
-
+    std::unique_ptr<QueryBuilder> builder;
     ~QueryBuilderDay() = default;
-    explicit QueryBuilderDay(const QueryBuilder &builder, int days = 1);
+    explicit QueryBuilderDay(const QueryBuilder &builder);
 
     std::vector<std::shared_ptr<weather::Forecast>> get_current_forecast();
     nlohmann::json get_current_forecast_json();
@@ -43,8 +45,9 @@ public:
 
 
 class QueryBuilderNow {
-    std::unique_ptr<QueryBuilder> builder;
 public:
+    std::unique_ptr<QueryBuilder> builder;
+
     explicit QueryBuilderNow(const QueryBuilder &builder);
     ~QueryBuilderNow() = default;
 

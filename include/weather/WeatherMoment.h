@@ -11,6 +11,8 @@
 #include "3rdparty/json.hpp"
 //#include "visitors/serializeToJsonVisitor.h"
 #include "weather/Astronomy.h"
+#include "settings.h"
+#include "weather/Location.h"
 
 namespace weather {
 /**
@@ -32,13 +34,14 @@ namespace weather {
         float uv;
         std::string condition_text;
         std::unique_ptr<weather::AirQuality> air_quality;
-        std::unique_ptr<weather::Astronomy> astronomy;
+        //std::unique_ptr<weather::Astronomy> astronomy;
 
 
         WeatherMoment() = default;
         WeatherMoment(const WeatherMoment &type);
         // overload << operator
         friend std::ostream &operator<<(std::ostream &os, const WeatherMoment &weather_moment);
+        std::string get_simple_output(const Settings &set) const;
         //void accept(Visitors::Visitor &v) const;
 
     };

@@ -16,12 +16,13 @@ private:
 public:
     bool celsius = true;
     std::string api_key;
-    std::string city = "Ostrava";
+    std::string city = "auto:ip";
+    bool astronomy = true;
     bool aqi = true;
     int days = 1;
-    Settings(std::string api_key);
+    explicit Settings(std::string api_key);
     ~Settings() = default;
 
-    void load(std::string path);
-    void save(std::string path);
+    void load(const std::string &path);
+    void save(const std::string &path);
 };

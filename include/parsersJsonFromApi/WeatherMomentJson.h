@@ -43,9 +43,7 @@ namespace parsersJsonFromApi {
         if (json.contains("air_quality")) {
             weatherMoment.air_quality = std::make_unique<weather::AirQuality>(parsersJsonFromApi::parseAirQuality(json["air_quality"]));
         }
-        if (json.contains("astronomy")) {
-            weatherMoment.astronomy = std::make_unique<weather::Astronomy>(parsersJsonFromApi::parseAstronomy(json["astronomy"]));
-        }
+
         return weatherMoment;
     }
 }

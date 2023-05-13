@@ -10,16 +10,17 @@ using json = nlohmann::json;
 Settings::Settings(std::string api_key) : api_key(std::move(api_key)) {
 
 }
-void Settings::load(std::string path) {
+void Settings::load(const std::string &path) {
     if (!io::load_json(path, this->settings)) {
         std::cout << "Could not load settings file: " << path << std::endl;
+        return;
     }
     api_key = this->settings["api_key"];
     city = this->settings["city"];
     celsius = this->settings["celsius"] == "true";
     aqi = this->settings["aqi"] == "true";
 }
-void Settings::save(std::string path) {
+void Settings::save(const std::string &path) {
 
     this->settings["api_key"] = api_key;
     this->settings["city"] = city;
