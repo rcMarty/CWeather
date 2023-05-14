@@ -6,6 +6,7 @@
 #include <fstream>
 #include <regex>
 #include <iostream>
+#include "colors.h"
 
 std::string io::get_api_key_from_file(const std::string &path) {
     std::string ret_key;
@@ -13,7 +14,7 @@ std::string io::get_api_key_from_file(const std::string &path) {
     std::ifstream file(path);
     if (!file.is_open()) {
         std::cout << "Could not open file: " << path << std::endl;
-        throw std::runtime_error("Could not open file: " + path);
+        throw std::runtime_error("Could not open file: " + path + "\nPlease create config file or provide valid path with api key in it.");
     }
 
     while (getline(file, tmp)) {
@@ -24,7 +25,7 @@ std::string io::get_api_key_from_file(const std::string &path) {
             return ret_key;
         }
     }
-    throw std::runtime_error("No API key found in file: " + path);
+    throw std::runtime_error("No API key found in file: " + path + "\nMake sure file is in format \"> api_key = yourApiKey\"");
 }
 
 bool io::load_json(const std::string &path, nlohmann::json &json) {

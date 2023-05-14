@@ -26,16 +26,17 @@ std::string graph::generate_graph(const std::vector<int> &data, const std::strin
 
     auto max = std::max_element(transformed.begin(), transformed.end());
     auto min = std::min_element(transformed.begin(), transformed.end());
-    //std::cout << *max << " " << *min << std::endl;
+    std::cout << *max << " " << *min << std::endl;
 
     std::vector<std::string> lines(range + 1);
+
     int zeroLineIndex = *origmax + 1;
 
-    for (int i = lines.size(); i > 0; i--) {
+    for (int i = lines.size() - 1; i > 0; i--) {
         lines[i] += std::to_string(zeroLineIndex - i) + "\t";
     }
 
-    for (size_t i = lines.size(); i > 0; i--) {
+    for (size_t i = lines.size() - 1; i > 0; i--) {
         for (size_t j = 0; j < transformed.size(); j++) {
 
             if (transformed[j] == *max - i + 1) {
@@ -52,10 +53,6 @@ std::string graph::generate_graph(const std::vector<int> &data, const std::strin
     for (auto &line: lines) {
         ret += line + "\n";
     }
-    
-
-
-    //std::cout << "graph: " << ret << std::endl;
     return ret;
 }
 std::string graph::get_temperature_graph(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &title, Settings &settings) {
@@ -66,10 +63,15 @@ std::string graph::get_temperature_graph(const std::vector<std::shared_ptr<weath
         std::cout << "Displaying all available days" << std::endl;
         days = forecast.size();
     }
+    if (settings.feels) {
+        return graph::get_temperature_feels_graph(forecast, title, settings);
+    }
+
     std::string graphs;
     graphs += RED + std::string(60, '-') + RESET + "\n";
     for (size_t i = 0; i < days; i++) {
-        graphs += "Day " + std::to_string(i + 1) + "\n";
+        auto tim = time(&forecast[i]->time);
+        graphs += "Day " + std::to_string(i + 1) + "\tDate: " + ctime(&tim) + "\n";
         std::vector<int> data;
         if (settings.celsius) {
             for (auto &sample: forecast[i]->samples) {
@@ -112,7 +114,8 @@ std::string graph::get_temperature_feels_graph(const std::vector<std::shared_ptr
     std::string graphs;
     graphs += RED + std::string(60, '-') + RESET + "\n";
     for (size_t i = 0; i < days; i++) {
-        graphs += "Day " + std::to_string(i + 1) + "\n";
+        auto tim = time(&forecast[i]->time);
+        graphs += "Day " + std::to_string(i + 1) + "\tDate: " + ctime(&tim) + "\n";
         std::vector<int> data;
         if (settings.celsius) {
             for (auto &sample: forecast[i]->samples) {
@@ -151,11 +154,12 @@ std::string graph::get_precip_graph(const std::vector<std::shared_ptr<weather::F
         days = forecast.size();
     }
     std::string graphs;
+
     graphs += RED + std::string(60, '-') + RESET + "\n";
 
-
     for (size_t i = 0; i < days; i++) {
-        graphs += "Day " + std::to_string(i + 1) + "\n";
+        auto tim = time(&forecast[i]->time);
+        graphs += "Day " + std::to_string(i + 1) + "\tDate: " + ctime(&tim) + "\n";
         graphs += "Precipitation (um)\n";
 
         std::vector<int> scaledprecip;
@@ -186,24 +190,4 @@ std::string graph::get_precip_graph(const std::vector<std::shared_ptr<weather::F
 }
 
 
-std::string usecases::graph_temperature_feels(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &title, Settings &settings) {
-    return std::string();
-}
-std::string usecases::graph_temperature(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &title, Settings &settings) {
-    return std::string();
-}
-std::string usecases::save_forecst(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &filename) {
-    return std::string();
-}
-std::string usecases::get_forecast(const std::vector<std::shared_ptr<weather::Forecast>> &forecast) {
-    return std::string();
-}
-std::string usecases::get_weather(const std::shared_ptr<weather::WeatherMoment> &weatherMoment) {
-    return std::string();
-}
-std::string usecases::graph_precip(const std::vector<std::shared_ptr<weather::Forecast>> &forecast, const std::string &title, Settings &settings) {
-    return std::string();
-}
-void usecases::create_settings() {
-    return;
-}
+

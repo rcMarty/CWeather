@@ -20,6 +20,7 @@ public:
     bool astronomy = true;
     bool aqi = true;
     int days = 1;
+    bool feels = false;
     explicit Settings(std::string api_key);
     ~Settings() = default;
 

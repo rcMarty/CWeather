@@ -49,7 +49,11 @@ weather::Forecast::Forecast(const weather::Forecast &type) {
 }
 std::string weather::Forecast::get_simple_output(const Settings &settings) const {
     std::string output;
-    output += "Time: " + std::to_string(this->time) + "\n";
+
+    time_t rawtime = this->time;
+    auto tim = std::time(&rawtime);
+    output += std::string("\tDate: ") + std::ctime(&tim) + "\n";
+    
     if (settings.celsius) {
         output += "Max temp: " + std::to_string(max_temp_c) + "°C" + "\t\t";
         output += "Min temp: " + std::to_string(min_temp_c) + "°C" + "\n";

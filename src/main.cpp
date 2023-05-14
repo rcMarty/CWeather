@@ -23,159 +23,12 @@ using json = nlohmann::json;
 
 int main(int argc, char **argv) {
 
-    //curlpp::Cleanup myCleanup;
-
-    // Send request and get a result.
-    // Here I use a shortcut to get it in a string stream ...
-
-//    std::ostringstream os;
-//    os << curlpp::options::Url(std::string("https://api.weatherapi.com/v1/ip.json?key=5528a1a55b054dd1913172922232303&q=auto:ip&aqi=yes"));
-//    string jsonString = os.str();
-//
-//    // Parse JSON
-//    json j = json::parse(jsonString);
-//
-//    cout << std::setw(4) << j << endl;
-
-//    auto f = std::make_unique<weather::Forecast>(weather::Forecast());
-//    f->time = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-//    for (size_t i = 0; i < 10; i++) {
-//        f->samples.push_back(std::make_unique<weather::WeatherMoment>(weather::WeatherMoment{
-//                .time = std::time(0),
-//                .temp_c = 10.0,
-//                .temp_f = 50.0,
-//                .feelslike_c = 10.0,
-//                .feelslike_f = 50.0,
-//                .wind_kph = 10.0,
-//                .wind_degree = 10,
-//                .pressure_mb = 10.0,
-//                .precip_mm = 10.0,
-//                .humidity = 10,
-//                .uv = 10.0,
-//                .condition_text = "test",
-//                .air_quality = std::make_unique<weather::AirQuality>(weather::AirQuality{
-//                        .co = 10.0,
-//                        .no2 = 10.0,
-//                        .o3 = 10.0,
-//                        .so2 = 10.0
-//                })}));
-//    }
-//    std::cout << f << std::endl;
-
-
-//    std::string ret_key;
-//    std::string tmp = "#KEY: 123";
-//
-//    if (tmp.find("#KEY:") != std::string::npos) {
-//        std::regex key_regex("[#KEYkey:\\s+]");
-//        ret_key = std::regex_replace(tmp, key_regex, std::string(""));
-//    }
-//
-//    std::cout << "." << ret_key << "." << std::endl;
-//
-//
-//    std::vector<std::string> params;
-//
-//    nlohmann::json inputjson;
-//    nlohmann::json scndjson;
-//    scndjson["testy0"] = "test";
-//    scndjson["testy1"] = "test2";
-//    inputjson["alerts"] += scndjson;
-//
-//
-//    inputjson["key"] = "123";
-//    inputjson["city"] = "Bratislava";
-//    inputjson["days"] = 3;
-//    inputjson["aqi"] = "yes";
-//    inputjson["alerts"][0]["alert"] = "1st alert";
-//    inputjson["alerts"][1]["alert"] = "2nd alert";
-//
-//
-//    for (int i = 0; i < 10; i++) {
-//        inputjson["optional"][0][("test" + std::to_string(i * 8))] = "test" + std::to_string(i);
-//    }
-//
-//    std::ofstream fileo("setings.json");
-//
-//    fileo << inputjson;
-//    fileo.close();
-//
-//
-//    nlohmann::json json;
-//    std::string path = "setings.json";
-//    std::ifstream file(path);
-//    if (!file.is_open()) {
-//        throw std::runtime_error("Could not open file: " + path);
-//    }
-//    file >> json;
-//    file.close();
-//
-//
-//    if (!json["optional"].empty()) {
-//        for (auto &i: json["optional"]) {
-//            std::cout << i << std::endl;
-//            for (auto &j: i.items()) {
-//                params.push_back(j.key() + "=" + j.value().get<std::string>());
-//
-//            }
-//        }
-//    }
-//
-//
-//    cout << json["alerts"].contains("a") << endl;
-//    cout << std::setw(4) << json << endl;
-//
-//    params.emplace_back("TAK TROCHU JINÝ TEST");
-//    for (auto i: params) {
-//        std::cout << i << std::endl;
-//    }
-//
-//    cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
-//
-//
-//    auto settin = std::make_unique<Settings>(io::get_api_key_from_file("settings.cfg"));
-//    settin->city = "Ostrava";
-//    settin->celsius = true;
-//    settin->days = 1;
-//    settin->save("settings.json");
-//    cout << settin->api_key << endl;
-//
-////    auto aaa = std::make_unique<QueryBuilderNow>(QueryBuilder(*settin));
-////    auto a = aaa->get_current_weather();
-////    auto js = aaa->get_current_weather_json();
-////    io::save_json("weather.json", js);
-//    auto bbb = std::make_unique<QueryBuilderDay>(QueryBuilder(*settin));
-//    auto b = bbb->get_current_forecast();
-//    auto js2 = bbb->get_current_forecast_json();
-//    io::save_json("forecast.json", js2);
-//
-//    //auto bb = *b[0];
-//
-//
-//    cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << endl;
-//
-//    //cout << b << endl;
-//    //cout << graph::get_temperature_graph(b, "Teplota", *settin) << endl;
-//    cout << graph::get_precip_graph(b, "Srážky", *settin) << endl;
-//
-//    //std::cout << bbb->get_current_forecast_json() << std::endl;
-//
-//    //std::cout << *b[0] << std::endl;
-//    //std::cout << *b[1] << std::endl;
-//    //std::cout << *b[2] << std::endl;
-//
-//    std::cout << "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%" << std::endl;
-
-
-//    auto graph = std::vector<int>{3, 4, 5, 6, 5, 4, 3, 4, 5, 6, 0, 0, 9, 10, 11, 10, 10, 9, 9, 7, 6, 5, 6};
-//    cout << graph::generate_graph(graph, "Moc pěkný graf") << endl;
-
-
     CLI::App app{"Weather app"};
     app.set_help_all_flag("--help-all", "Expand all help");
 
     CLI::App *current = app.add_subcommand("current", "Current weather");
     CLI::App *forecast = app.add_subcommand("forecast", "Forecast weather");
+    CLI::App *settings = app.add_subcommand("settings", "Settings");
     app.require_subcommand(1);
     string city;
     string key;
@@ -184,20 +37,28 @@ int main(int argc, char **argv) {
     int days{0};
     bool temp{false};
     bool rain{false};
+    char units{};
+    bool astronomy{false};
+    bool feels{false};
+    string savefilepath;
+    string loadfilepath;
     auto settin = std::make_unique<Settings>("");
     settin->load("settinngs.json");
 
-    current->add_option("-k,--file-key", key, "path to config.cfg file with api key | also you can make Settings")->required();
     current->add_option("-c,--city", city, "City name");
     current->add_flag("-s,--simple", simple, "Simple output");
+    current->add_option("-k,--file-key", key, "path to config.cfg file with api key | also you can make Settings");
 
 
     current->callback([&]() {
-        cout << "path to key: " << key << endl;
-        cout << "city: " << (city == "" ? "searching by auto ip" : city) << endl;
-        settin->api_key = io::get_api_key_from_file(key);
-        settin->city = (city == "" ? settin->city : city);
 
+
+        if (settin->api_key == "") {
+            cout << "path to key: " << key << endl;
+            cout << "city: " << (city == "" ? "searching by auto ip" : city) << endl;
+            settin->api_key = io::get_api_key_from_file(key);
+        }
+        settin->city = (city == "" ? settin->city : city);
 
         auto query = std::make_unique<QueryBuilderNow>(QueryBuilder(*settin));
         auto loc = query->builder->get_location();
@@ -212,29 +73,55 @@ int main(int argc, char **argv) {
     });
 
 
-    forecast->add_option("-k,--file-key", key, "path to config.cfg file with api key | also you can make Settings")->required();
+    forecast->add_option("-k,--file-key", key, "path to config.cfg file with api key | also you can make Settings");
     forecast->add_option("-c,--city", city, "City name");
     forecast->add_option("-d,--days", days, "Number of days to forecast");
+    forecast->add_option("--save", savefilepath, "Save Forecast to file");
+    forecast->add_option("--load", loadfilepath, "Load Forecast from file");
 
     forecast->add_flag("-t,--temp", temp, "Show temperature graph");
     forecast->add_flag("-r,--rain", rain, "Show rain graph");
     forecast->add_flag("-s,--simple", simple, "Simple output");
-    forecast->add_flag("-a,--aqi", aqi, "Show AQI");
+    forecast->add_flag("-a,--astronomy", astronomy, "Show astronomy data");
+    forecast->add_flag("-q,--aqi", aqi, "Show Quality of Air");
+    forecast->add_flag("-f,--feels", feels, "Show feels like temperature");
 
 
     forecast->callback([&]() {
-        cout << "path to key: " << key << endl;
-        cout << "city: " << (city == "" ? "searching by auto ip" : city) << endl;
-        cout << "days: " << (days == 0 ? "displaying one day" : std::to_string(days)) << endl;
+        if (settin->api_key == "") {
+            settin->api_key = io::get_api_key_from_file(key);
+            cout << "path to key: " << key << endl;
+            cout << "city: " << (city == "" ? "searching by auto ip" : city) << endl;
+            cout << "days: " << (days == 0 ? "displaying one day" : std::to_string(days)) << endl;
+        }
+
         settin->city = (city == "" ? settin->city : city);
-        settin->api_key = io::get_api_key_from_file(key);
         settin->days = (days == 0 ? settin->days : days);
         settin->aqi = aqi;
+        settin->astronomy = astronomy;
+        settin->feels = feels;
+
 
         auto query = std::make_unique<QueryBuilderDay>(QueryBuilder(*settin));
+
+        if (!savefilepath.empty()) {
+            if (io::save_json(savefilepath, query->builder->response))
+                cout << "Saved to: " << savefilepath << endl;
+            else
+                cout << "Error while saving to: " << savefilepath << endl;
+        }
+        if (!loadfilepath.empty()) {
+            if (io::load_json(loadfilepath, query->builder->response))
+                cout << "Loaded from: " << loadfilepath << endl;
+            else
+                cout << "Error while loading from: " << loadfilepath << endl;
+        }
+
         //cout << query->builder->response << endl;
         auto loc = query->builder->get_location();
         auto weather = query->get_current_forecast();
+
+
         std::cout << "Searching for city: " << loc.city << ", " << loc.country << std::endl;
         if (rain) {
             std::cout << graph::get_precip_graph(weather, "Rain", *settin) << std::endl;
@@ -250,6 +137,33 @@ int main(int argc, char **argv) {
             }
         }
     });
+
+
+    settings->add_option("-k,--file-key", key, "path to config.cfg file with api key | also you can make Settings")->required();
+    settings->add_option("-c,--city", city, "City name");
+    settings->add_option("-d,--days", days, "Number of days to forecast");
+    settings->add_option("-u,--units", units, "Units of temperature (c/f) c->celsius, f->fahrenheit");
+    settings->add_flag("-a,--astronomy", astronomy, "Show astronomy data");
+    settings->add_flag("-q,--aqi", aqi, "Show Quality of Air");
+    settings->add_flag("-f,--feels", feels, "Show feels like temperature");
+    settings->callback([&]() {
+        cout << "path to key: " << key << endl;
+        settin->api_key = io::get_api_key_from_file(key);
+        settin->city = (city.empty() ? settin->city : city);
+        settin->days = (days == 0 ? settin->days : days);
+        settin->aqi = aqi;
+        if (units == 'f')
+            settin->celsius = false;
+        else if (units == 'c')
+            settin->celsius = true;
+        else
+            cout << "No recognizable units, using normal C" << endl;
+        settin->astronomy = units;
+        settin->feels = feels;
+        settin->aqi = aqi;
+        settin->save("settinngs.json");
+    });
+
 
     CLI11_PARSE(app, argc, argv);
 
